@@ -1,0 +1,15 @@
+stages:
+  - lint
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+
+pre-commit:
+  stage: lint
+  image: python:3.10.13
+  script:
+    - pip install pre-commit
+    - pre-commit run --all-files
+  allow_failure: false

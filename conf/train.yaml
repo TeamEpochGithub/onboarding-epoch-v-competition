@@ -1,0 +1,30 @@
+defaults:
+  - base_train
+  - hydra/logging
+  - model: run # Add models or ensembles
+  - wandb: wandb
+
+###############
+#             #
+#    PATHS    #
+#             #
+###############
+
+train_path: data/raw/train_images/
+pokemon_metadata_path: data/raw/pokemon_metadata.csv
+image_metadata_path: data/raw/image_metadata.csv
+cache_path: data/cache
+processed_path: data/processed
+
+# Set to 0 if you want train full.
+test_size: 0.2
+
+scorer:
+  _target_: src.scoring.rocauc.ROCAUC # Add scorer
+  name: rocauc
+splitter:
+  _target_: sklearn.model_selection.KFold
+  n_splits: 5 # Set to 0 if you want train full.
+  shuffle: true
+  random_state: 42
+allow_multiple_instances: true

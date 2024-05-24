@@ -1,0 +1,15 @@
+defaults:
+  - base_submit
+  - hydra/logging
+  - model: run # Add models or ensembles
+
+# Use this when uploading to Kaggle
+
+###############
+#             #
+#    PATHS    #
+#             #
+###############
+
+result_path: submission
+test_path: data/raw/test_images/
