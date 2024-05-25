@@ -7,7 +7,7 @@ x_sys:
   title: Preprocessing pipeline
   steps:
   - _target_: src.modules.transformation.x.get_images.GetImages
-  - _target_: src.modules.transformation.x.get_first_10_pixels.GetFirst10Pixels
+  - _target_: src.modules.transformation.x.prepare_images.ResizeAndNormalize
 
 
 y_sys:
@@ -24,9 +24,11 @@ train_sys:
       patience: 10
       batch_size: 32
       model:
-        _target_: src.modules.training.models.mlp.MLP
-        input_dim: 10
-        output_dim: 18
+        _target_: src.modules.training.models.timm.Timm
+        in_channels: 3
+        out_channels: 18
+        model_name: 'resnet34'
+        activation: "sigmoid"
       criterion:
         _target_: torch.nn.BCELoss
       optimizer:
