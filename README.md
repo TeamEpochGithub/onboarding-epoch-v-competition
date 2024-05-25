@@ -5,8 +5,8 @@
 [![Rye](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/rye/main/artwork/badge.json)](https://rye-up.com)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Checked with MyPy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Jeffrey-Lim/onboarding-epoch-v-competition/main.svg)](https://results.pre-commit.ci/latest/Jeffrey-Lim/onboarding-epoch-v-competition/main)
-[![codecov](https://codecov.io/gh/Jeffrey-Lim/onboarding-epoch-v-competition/graph/badge.svg?token=RsQNP7rS95)](https://codecov.io/gh/Jeffrey-Lim/onboarding-epoch-v-competition)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/TeamEpochGithub/onboarding-epoch-v-competition/main.svg)](https://results.pre-commit.ci/latest/TeamEpochGithub/onboarding-epoch-v-competition/main)
+[![codecov](https://codecov.io/gh/TeamEpochGithub/onboarding-epoch-v-competition/graph/badge.svg?token=gzOUyRJV5L)](https://codecov.io/gh/TeamEpochGithub/onboarding-epoch-v-competition)
 
 Team Epoch's solution to the [Pokémon Type Classification Competition](https://www.kaggle.com/competitions/pokemon-type-classification-epoch-v-competition).
 
