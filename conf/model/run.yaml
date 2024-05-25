@@ -21,14 +21,16 @@ train_sys:
     - _target_: src.modules.training.main_trainer.MainTrainer
       n_folds: 5 # 0 for train full,
       epochs: 20
-      patience: 10
+      patience: 4
       batch_size: 32
       model:
-        _target_: src.modules.training.models.timm.Timm
-        in_channels: 3
-        out_channels: 18
-        model_name: 'resnet34'
-        activation: "sigmoid"
+        _target_: src.modules.training.models.augmented_model.AugmentedModel
+        model:
+          _target_: src.modules.training.models.timm.Timm
+          in_channels: 3
+          out_channels: 18
+          model_name: 'resnet34'
+          activation: "sigmoid"
       criterion:
         _target_: torch.nn.BCELoss
       optimizer:
@@ -36,4 +38,16 @@ train_sys:
         _args_:
           - _target_: hydra.utils.get_class
             path: torch.optim.AdamW
-        lr: 1e-3
+        lr: 5e-4
+      scheduler:
+        _target_: functools.partial
+        _args_:
+          - _target_: hydra.utils.get_class
+            path: timm.scheduler.cosine_lr.CosineLRScheduler
+        t_initial: 20
+        cycle_mul: 1
+        cycle_decay: 1
+        cycle_limit: 1
+        warmup_t: 0
+        warmup_lr_init: 1e-5
+        lr_min: 5e-5
