@@ -97,23 +97,23 @@ def run_cv_cfg(cfg: CVConfig) -> None:
     oof_predictions = np.zeros(y.labels.shape, dtype=np.float64) if y is not None else np.array([])
 
     for fold_no, (train_indices, test_indices) in enumerate(instantiate(cfg.splitter).split(y)):
-        score, predictions = run_fold(fold_no, X, y, train_indices, test_indices, cfg, scorer, output_dir, cache_args)
-        scores.append(score)
+        run_fold(fold_no, X, y, train_indices, test_indices, cfg, scorer, output_dir, cache_args)
+        # scores.append(score)
 
         # Save predictions
-        oof_predictions[test_indices] = predictions
+        # oof_predictions[test_indices] = predictions
 
-    avg_score = np.average(np.array(scores))
-    oof_score = scorer(y.labels if y is not None else [], oof_predictions)
-
-    print_section_separator("CV - Results")
-    logger.info(f"Avg Score: {avg_score}")
-    wandb.log({"Avg Score": avg_score})
-
-    logger.info(f"OOF Score: {oof_score}")
-    wandb.log({"OOF Score": oof_score})
-
-    logger.info("Finishing wandb run")
+    # avg_score = np.average(np.array(scores))
+    # oof_score = scorer(y.labels if y is not None else [], oof_predictions)
+    #
+    # print_section_separator("CV - Results")
+    # logger.info(f"Avg Score: {avg_score}")
+    # wandb.log({"Avg Score": avg_score})
+    #
+    # logger.info(f"OOF Score: {oof_score}")
+    # wandb.log({"OOF Score": oof_score})
+    #
+    # logger.info("Finishing wandb run")
     wandb.finish()
 
 
@@ -156,16 +156,17 @@ def run_fold(
         fold=fold_no,
         save_model=cfg.save_folds,
     )
-    predictions, _ = model_pipeline.train(X, y, **train_args)
-
-    score = scorer(y.labels[test_indices], predictions)
-    logger.info(f"Score, fold {fold_no}: {score}")
+    model_pipeline.train(X, y, **train_args)
+    return
+    # score = scorer(y.labels[test_indices], predictions)
+    # logger.info(f"Score, fold {fold_no}: {score}")
 
     fold_dir = output_dir / str(fold_no)  # Files specific to a run can be saved here
     logger.debug(f"Output Directory: {fold_dir}")
 
-    if wandb.run:
-        wandb.log({f"Score_{fold_no}": score})
+    # if wandb.run:
+    #     wandb.log({f"Score_{fold_no}": score})
+    return
     return score, predictions
 
 
