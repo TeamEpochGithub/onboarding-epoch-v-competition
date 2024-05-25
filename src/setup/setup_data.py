@@ -30,6 +30,7 @@ def setup_train_x_data(path: str | PathLike[str], image_metadata: str | PathLike
     """
     # Load the metadata
     image_metadata = pd.read_csv(image_metadata)
+    valid_metadata = image_metadata[image_metadata['Type'] != 'Back']
     pokemon_metadata = pd.read_csv(pokemon_metadata)
 
     images: list[npt.NDArray[np.floating[Any]]] = []
@@ -40,7 +41,7 @@ def setup_train_x_data(path: str | PathLike[str], image_metadata: str | PathLike
         image = iio.imread(load_path)
         images.append(image)
 
-    return XData(images=images, image_metadata=image_metadata, pokemon_metadata=pokemon_metadata)
+    return XData(images=images, image_metadata=valid_metadata.reset_index(drop=True), pokemon_metadata=pokemon_metadata)
 
 
 def setup_train_y_data(image_metadata: str | PathLike[str], pokemon_metadata: str | PathLike[str]) -> YData:
@@ -54,6 +55,7 @@ def setup_train_y_data(image_metadata: str | PathLike[str], pokemon_metadata: st
     """
     # Load the metadata
     image_metadata = pd.read_csv(image_metadata)
+    valid_metadata = image_metadata[image_metadata['Type'] != 'Back']
     pokemon_metadata = pd.read_csv(pokemon_metadata)
 
     # Merge the dataframes to find the types of the training images
@@ -83,7 +85,7 @@ def setup_train_y_data(image_metadata: str | PathLike[str], pokemon_metadata: st
         for type_index in row["Type_index"]:
             one_hot_labels[i, type_index] = 1
 
-    return YData(labels=one_hot_labels, image_metadata=image_metadata, pokemon_metadata=pokemon_metadata)
+    return YData(labels=one_hot_labels, image_metadata=valid_metadata.reset_index(drop=True), pokemon_metadata=pokemon_metadata)
 
 
 def setup_inference_data(path: str | PathLike[str]) -> XData:
