@@ -14,7 +14,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install the latest version of rye
-        uses: eifinger/setup-rye@v3.0.1
+        uses: eifinger/setup-rye@v3.0.2
       - name: Setup the environment
         run: rye sync --all-features
       - name: Run tests
